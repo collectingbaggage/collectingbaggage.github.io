@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F & M – Antwort</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #fdf6ef;
+    --warm: #f5ebe0;
+    --rose: #c17e6a;
+    --rose-dark: #8b4f3a;
+    --sage: #7a8c6e;
+    --text: #3a2e28;
+    --muted: #8a7a72;
+    --gold: #b8955a;
+  }
+  body { background-color: var(--cream); font-family: 'Jost', sans-serif; color: var(--text); min-height: 100vh; }
+  .hero { position: relative; text-align: center; padding: 3rem 2rem 5rem; overflow: hidden; background: linear-gradient(to bottom, #fdf6ef 60%, #fbeee3); }
+  .floral-strip { position: absolute; bottom: 0; left: 0; right: 0; height: 120px; pointer-events: none; }
+  .monogram { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 10vw, 6rem); font-weight: 300; color: var(--rose-dark); letter-spacing: 0.05em; line-height: 1; margin-bottom: 0.5rem; }
+  .monogram .amp { color: var(--gold); font-style: italic; font-weight: 300; }
+  .tagline { font-family: 'Jost', sans-serif; font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--rose); margin-bottom: 0.5rem; }
+  .date { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4rem, 4vw, 2rem); font-weight: 400; color: var(--text); }
+  .form-wrap { max-width: 640px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; color: var(--rose-dark); margin: 2.5rem 0 1.25rem; padding-bottom: 0.5rem; border-bottom: 1px solid #e8d5c8; }
+  .field { margin-bottom: 1.25rem; }
+  label { display: block; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
+  label .req { color: var(--rose); }
+  input[type="text"], input[type="email"], input[type="tel"], select, textarea {
+    width: 100%; padding: 0.75rem 1rem; border: 1px solid #ddd0c8; border-radius: 6px;
+    background: #fff; font-family: 'Jost', sans-serif; font-size: 0.95rem; color: var(--text); outline: none; transition: border-color 0.2s; -webkit-appearance: none;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--rose); box-shadow: 0 0 0 3px rgba(193,126,106,0.12); }
+  textarea { resize: vertical; min-height: 90px; }
+  .radio-group, .check-group { display: flex; flex-direction: column; gap: 0.6rem; }
+  .radio-item, .check-item { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; font-size: 0.95rem; }
+  .radio-item input, .check-item input { width: 18px; height: 18px; accent-color: var(--rose); flex-shrink: 0; }
+  .guest-block { background: #fff9f5; border: 1px solid #e8d5c8; border-radius: 10px; padding: 1.25rem 1.25rem 0.75rem; margin-bottom: 1rem; }
+  .guest-block h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--rose-dark); margin-bottom: 1rem; }
+  .add-guest-btn { background: none; border: 1px dashed var(--rose); color: var(--rose); border-radius: 6px; padding: 0.6rem 1.25rem; font-family: 'Jost', sans-serif; font-size: 0.85rem; letter-spacing: 0.08em; cursor: pointer; width: 100%; transition: background 0.2s; }
+  .add-guest-btn:hover { background: rgba(193,126,106,0.06); }
+  .remove-btn { background: none; border: none; color: var(--muted); font-size: 0.8rem; cursor: pointer; padding: 0; letter-spacing: 0.05em; text-decoration: underline; margin-top: 0.5rem; }
+  .submit-btn { display: block; width: 100%; margin-top: 2.5rem; padding: 1rem; background: var(--rose-dark); color: #fff; border: none; border-radius: 8px; font-family: 'Jost', sans-serif; font-size: 0.85rem; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; transition: background 0.2s, transform 0.1s; }
+  .submit-btn:hover { background: var(--rose); }
+  .submit-btn:active { transform: scale(0.99); }
+  #success { display: none; text-align: center; padding: 3rem 1.5rem; }
+  #success .big { font-family: 'Cormorant Garamond', serif; font-size: 2rem; color: var(--rose-dark); margin-bottom: 1rem; }
+  #success p { color: var(--muted); line-height: 1.7; }
+  .error-msg { color: #c0392b; font-size: 0.78rem; margin-top: 0.3rem; display: none; }
+  .honeypot { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="monogram">F <span class="amp">&</span> M</div>
+  <div class="tagline">Wir heiraten!</div>
+  <div class="date">5. September 2026</div>
+  <svg class="floral-strip" viewBox="0 0 800 120" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg">
+    <line x1="80" y1="120" x2="75" y2="30" stroke="#7a8c6e" stroke-width="1.5" opacity="0.7"/>
+    <line x1="200" y1="120" x2="195" y2="20" stroke="#7a8c6e" stroke-width="1.5" opacity="0.7"/>
+    <line x1="320" y1="120" x2="330" y2="10" stroke="#7a8c6e" stroke-width="1.5" opacity="0.7"/>
+    <line x1="450" y1="120" x2="448" y2="40" stroke="#7a8c6e" stroke-width="1.5" opacity="0.7"/>
+    <line x1="580" y1="120" x2="575" y2="25" stroke="#7a8c6e" stroke-width="1.5" opacity="0.7"/>
+    <line x1="680" y1="120" x2="685" y2="35" stroke="#7a8c6e" stroke-width="1.5" opacity="0.7"/>
+    <line x1="130" y1="120" x2="135" y2="55" stroke="#a08060" stroke-width="1.2" opacity="0.5"/>
+    <line x1="530" y1="120" x2="528" y2="50" stroke="#a08060" stroke-width="1.2" opacity="0.5"/>
+    <line x1="750" y1="120" x2="752" y2="60" stroke="#7a8c6e" stroke-width="1.2" opacity="0.6"/>
+    <ellipse cx="78" cy="70" rx="12" ry="5" fill="#7a8c6e" opacity="0.4" transform="rotate(-30 78 70)"/>
+    <ellipse cx="198" cy="60" rx="11" ry="5" fill="#7a8c6e" opacity="0.4" transform="rotate(20 198 60)"/>
+    <ellipse cx="332" cy="50" rx="10" ry="4" fill="#7a8c6e" opacity="0.35" transform="rotate(-15 332 50)"/>
+    <ellipse cx="576" cy="65" rx="13" ry="5" fill="#7a8c6e" opacity="0.4" transform="rotate(25 576 65)"/>
+    <g transform="translate(195,20)">
+      <ellipse cx="0" cy="-8" rx="7" ry="11" fill="#e8a0b0" opacity="0.85" transform="rotate(0)"/>
+      <ellipse cx="0" cy="-8" rx="7" ry="11" fill="#e8a0b0" opacity="0.75" transform="rotate(45)"/>
+      <ellipse cx="0" cy="-8" rx="7" ry="11" fill="#e8a0b0" opacity="0.75" transform="rotate(90)"/>
+      <ellipse cx="0" cy="-8" rx="7" ry="11" fill="#e8a0b0" opacity="0.75" transform="rotate(135)"/>
+      <circle cx="0" cy="0" r="5" fill="#f5c842" opacity="0.9"/>
+    </g>
+    <g transform="translate(450,40)">
+      <ellipse cx="0" cy="-7" rx="6" ry="10" fill="#f5c842" opacity="0.85" transform="rotate(0)"/>
+      <ellipse cx="0" cy="-7" rx="6" ry="10" fill="#f5c842" opacity="0.8" transform="rotate(60)"/>
+      <ellipse cx="0" cy="-7" rx="6" ry="10" fill="#f5c842" opacity="0.8" transform="rotate(120)"/>
+      <circle cx="0" cy="0" r="5" fill="#c88a10" opacity="0.85"/>
+    </g>
+    <g transform="translate(80,30)" opacity="0.7">
+      <ellipse cx="0" cy="-5" rx="3" ry="5" fill="#9b8ec4"/>
+      <ellipse cx="0" cy="-12" rx="3" ry="5" fill="#9b8ec4"/>
+      <ellipse cx="0" cy="-19" rx="3" ry="5" fill="#9b8ec4"/>
+    </g>
+    <g transform="translate(580,25)" opacity="0.7">
+      <ellipse cx="0" cy="-5" rx="3" ry="5" fill="#9b8ec4"/>
+      <ellipse cx="0" cy="-12" rx="3" ry="5" fill="#9b8ec4"/>
+      <ellipse cx="0" cy="-19" rx="3" ry="5" fill="#9b8ec4"/>
+    </g>
+    <g transform="translate(330,10)">
+      <circle cx="0" cy="0" r="8" fill="#e8694a" opacity="0.8"/>
+      <circle cx="0" cy="0" r="4" fill="#c84020" opacity="0.9"/>
+    </g>
+    <g transform="translate(685,35)">
+      <circle cx="0" cy="0" r="7" fill="#e8a0b0" opacity="0.8"/>
+      <circle cx="0" cy="0" r="3" fill="#f5c842" opacity="0.9"/>
+    </g>
+    <g transform="translate(130,55)" opacity="0.6">
+      <ellipse cx="-2" cy="-5" rx="3" ry="6" fill="#c8a060"/>
+      <ellipse cx="2" cy="-10" rx="3" ry="6" fill="#c8a060"/>
+      <ellipse cx="-1" cy="-16" rx="3" ry="6" fill="#c8a060"/>
+    </g>
+    <g transform="translate(530,50)" opacity="0.6">
+      <ellipse cx="-2" cy="-5" rx="3" ry="6" fill="#c8a060"/>
+      <ellipse cx="2" cy="-10" rx="3" ry="6" fill="#c8a060"/>
+    </g>
+    <g transform="translate(752,60)">
+      <ellipse cx="0" cy="-5" rx="4" ry="7" fill="#9b8ec4" opacity="0.8" transform="rotate(0)"/>
+      <ellipse cx="0" cy="-5" rx="4" ry="7" fill="#9b8ec4" opacity="0.75" transform="rotate(60)"/>
+      <ellipse cx="0" cy="-5" rx="4" ry="7" fill="#9b8ec4" opacity="0.75" transform="rotate(120)"/>
+      <circle cx="0" cy="0" r="4" fill="#f5c842" opacity="0.9"/>
+    </g>
+    <rect x="0" y="100" width="800" height="20" fill="#fbeee3" opacity="0.6"/>
+  </svg>
+</div>
+
+<div class="form-wrap">
+  <div id="form-area">
+    <p style="text-align:center; color: var(--muted); font-size: 0.92rem; line-height: 1.7; margin-bottom: 0.5rem;">
+      Wie schön, dass du dabei sein kannst! Bitte teile uns mit,<br>ob du kommen wirst – damit wir alles perfekt vorbereiten können.
+    </p>
+    <p style="text-align:center; font-size: 0.78rem; color: #bba898; letter-spacing: 0.08em;">Bitte antworte bis zum <strong>1. April 2026</strong></p>
+
+    <form id="rsvp-form" novalidate>
+      <div class="honeypot" aria-hidden="true">
+        <label>Bitte leer lassen</label>
+        <input type="text" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <h2 class="section-title">Deine Angaben</h2>
+
+      <div class="field">
+        <label>Name <span class="req">*</span></label>
+        <input type="text" id="naam" name="naam" placeholder="Vor- und Nachname" required>
+        <div class="error-msg" id="err-naam">Bitte gib deinen Namen ein.</div>
+      </div>
+
+      <div class="field">
+        <label>E-Mail-Adresse <span class="req">*</span></label>
+        <input type="email" id="email" name="email" placeholder="deine@email.de" required>
+        <div class="error-msg" id="err-email">Bitte gib eine gültige E-Mail-Adresse ein.</div>
+      </div>
+
+      <div class="field">
+        <label>Telefonnummer</label>
+        <input type="tel" id="telefoon" name="telefoon" placeholder="+49 151 12345678">
+      </div>
+
+      <h2 class="section-title">Zusage</h2>
+
+      <div class="field">
+        <label>Kannst du zur Hochzeit kommen? <span class="req">*</span></label>
+        <div class="radio-group" id="aanwezig-group">
+          <label class="radio-item">
+            <input type="radio" name="aanwezig" value="ja_volledig"> Ja, ich bin den ganzen Tag dabei!
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="aanwezig" value="ja_gedeeltelijk"> Ich komme, kann aber nicht den ganzen Tag bleiben
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="aanwezig" value="nee"> Leider kann ich nicht dabei sein
+          </label>
+        </div>
+        <div class="error-msg" id="err-aanwezig">Bitte wähle eine Option.</div>
+      </div>
+
+      <div id="extra-velden" style="display:none;">
+        <div class="field">
+          <label>Anwesend bei der Zeremonie (14:00 Uhr)?</label>
+          <div class="radio-group">
+            <label class="radio-item"><input type="radio" name="ceremonie" value="ja"> Ja</label>
+            <label class="radio-item"><input type="radio" name="ceremonie" value="nee"> Nein</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Anwesend beim Abendessen (17:30 Uhr)?</label>
+          <div class="radio-group">
+            <label class="radio-item"><input type="radio" name="diner" value="ja"> Ja</label>
+            <label class="radio-item"><input type="radio" name="diner" value="nee"> Nein</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Anwesend bei der Party (20:00 Uhr)?</label>
+          <div class="radio-group">
+            <label class="radio-item"><input type="radio" name="feest" value="ja"> Ja</label>
+            <label class="radio-item"><input type="radio" name="feest" value="nee"> Nein</label>
+          </div>
+        </div>
+
+        <h2 class="section-title">Ernährungswünsche &amp; Allergien</h2>
+
+        <div class="field">
+          <label>Ernährungsweise</label>
+          <select id="eetvoorkeur" name="eetvoorkeur">
+            <option value="">— Keine besondere Vorliebe —</option>
+            <option value="vegetarisch">Vegetarisch</option>
+            <option value="veganistisch">Vegan</option>
+            <option value="glutenvrij">Glutenfrei</option>
+            <option value="halal">Halal</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Allergien oder andere Ernährungswünsche</label>
+          <textarea id="allergieen" name="allergieen" placeholder="z. B. Nüsse, Laktose, Meeresfrüchte…"></textarea>
+        </div>
+
+        <h2 class="section-title">Begleitpersonen</h2>
+        <p style="font-size:0.85rem; color: var(--muted); margin-bottom: 1rem; line-height: 1.6;">Bringst du jemanden mit? Füge hier die Angaben deines Partners oder deiner Kinder hinzu.</p>
+
+        <div id="guests-container"></div>
+        <button type="button" class="add-guest-btn" id="add-guest-btn">+ Begleitperson hinzufügen</button>
+
+        <h2 class="section-title">Übernachtung</h2>
+        <div class="field">
+          <label>Benötigst du Unterkunftsempfehlungen in der Nähe?</label>
+          <div class="radio-group">
+            <label class="radio-item"><input type="radio" name="logies" value="ja"> Ja, gerne Tipps!</label>
+            <label class="radio-item"><input type="radio" name="logies" value="nee"> Nein, ich habe bereits etwas organisiert</label>
+          </div>
+        </div>
+
+        <h2 class="section-title">Sonstiges</h2>
+        <div class="field">
+          <label>Möchtest du dem Brautpaar etwas mitteilen?</label>
+          <textarea id="bericht" name="bericht" placeholder="Ein Glückwunsch, eine Frage oder ein besonderer Wunsch…"></textarea>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">Antwort absenden ✉</button>
+    </form>
+  </div>
+
+  <div id="success">
+    <div class="big">Vielen Dank! 🌸</div>
+    <p>Wir haben deine Anmeldung erhalten und freuen uns riesig darauf,<br>diesen besonderen Moment mit dir zu teilen.</p>
+    <p style="margin-top:1.5rem; font-size:0.85rem;">— F &amp; M</p>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('input[name="aanwezig"]').forEach(r => {
+  r.addEventListener('change', () => {
+    const val = r.value;
+    document.getElementById('extra-velden').style.display =
+      (val === 'ja_volledig' || val === 'ja_gedeeltelijk') ? 'block' : 'none';
+  });
+});
+
+let guestCount = 0;
+document.getElementById('add-guest-btn').addEventListener('click', () => {
+  guestCount++;
+  const container = document.getElementById('guests-container');
+  const block = document.createElement('div');
+  block.className = 'guest-block';
+  block.id = `guest-${guestCount}`;
+  block.innerHTML = `
+    <h4>Begleitperson ${guestCount}</h4>
+    <div class="field">
+      <label>Name der Begleitperson</label>
+      <input type="text" name="gast_naam_${guestCount}" placeholder="Vor- und Nachname">
+    </div>
+    <div class="field">
+      <label>Ernährungsweise</label>
+      <select name="gast_eet_${guestCount}">
+        <option value="">— Keine besondere Vorliebe —</option>
+        <option value="vegetarisch">Vegetarisch</option>
+        <option value="veganistisch">Vegan</option>
+        <option value="glutenvrij">Glutenfrei</option>
+        <option value="halal">Halal</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Alter (für Kinderarrangement)</label>
+      <select name="gast_leeftijd_${guestCount}">
+        <option value="">— Auswählen —</option>
+        <option value="volwassen">Erwachsen</option>
+        <option value="kind_6_12">Kind (6–12 Jahre)</option>
+        <option value="kind_onder6">Kind (unter 6)</option>
+        <option value="baby">Baby</option>
+      </select>
+    </div>
+    <button type="button" class="remove-btn" onclick="document.getElementById('guest-${guestCount}').remove()">Begleitperson entfernen</button>
+  `;
+  container.appendChild(block);
+});
+
+document.getElementById('rsvp-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  if (document.querySelector('input[name="website"]').value) return;
+
+  let valid = true;
+  const naam = document.getElementById('naam');
+  const email = document.getElementById('email');
+  const aanwezig = document.querySelector('input[name="aanwezig"]:checked');
+
+  document.getElementById('err-naam').style.display = !naam.value.trim() ? 'block' : 'none';
+  if (!naam.value.trim()) valid = false;
+
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
+  document.getElementById('err-email').style.display = !emailOk ? 'block' : 'none';
+  if (!emailOk) valid = false;
+
+  document.getElementById('err-aanwezig').style.display = !aanwezig ? 'block' : 'none';
+  if (!aanwezig) valid = false;
+
+  if (!valid) return;
+
+  const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/PASTE_YOUR_FORM_ID_HERE/formResponse';
+
+  const fd = new FormData();
+  fd.append('entry.NAAM', naam.value);
+  fd.append('entry.EMAIL', email.value);
+  fd.append('entry.TELEFOON', document.getElementById('telefoon').value);
+  fd.append('entry.AANWEZIG', aanwezig ? aanwezig.value : '');
+  fd.append('entry.EETVOORKEUR', document.getElementById('eetvoorkeur')?.value || '');
+  fd.append('entry.ALLERGIEEN', document.getElementById('allergieen')?.value || '');
+  fd.append('entry.BERICHT', document.getElementById('bericht')?.value || '');
+
+  try {
+    await fetch(GOOGLE_FORM_URL, { method: 'POST', body: fd, mode: 'no-cors' });
+  } catch(_) {}
+
+  document.getElementById('form-area').style.display = 'none';
+  document.getElementById('success').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
+</body>
+</html>
