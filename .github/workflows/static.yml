@@ -33,9 +33,9 @@ jobs:
         uses: actions/checkout@v4
       - name: Inject action urls
         run: |
-          sed -i "s|%%GOOGLE_FORM_URL_DAG%%|${{ secrets.GOOGLE_FORM_URL_DAG }}|g" public/rsvp-dag-nl.html
-          sed -i "s|%%GOOGLE_FORM_URL_DAG%%|${{ secrets.GOOGLE_FORM_URL_DAG }}|g" public/rsvp-dag-de.html
-          sed -i "s|%%GOOGLE_FORM_URL_AVOND%%|${{ secrets.GOOGLE_FORM_URL_AVOND }}|g" public/rsvp-avond-nl.html
+          sed -i "s|%%GOOGLE_FORM_URL_DAG%%|${{ secrets.GOOGLE_FORM_URL_DAG }}|g" public/nl-0ce6a.html
+          sed -i "s|%%GOOGLE_FORM_URL_DAG%%|${{ secrets.GOOGLE_FORM_URL_DAG }}|g" public/de-f072a.html
+          sed -i "s|%%GOOGLE_FORM_URL_AVOND%%|${{ secrets.GOOGLE_FORM_URL_AVOND }}|g" public/avond-a63hcd.html
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
