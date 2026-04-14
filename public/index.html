@@ -2,13 +2,15 @@
 <head>
     <title>Collecting Baggage</title>
     <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --cream: #fdf6ef; --rose: #c17e6a; --rose-dark: #8b4f3a; --text: #3a2e28; --muted: #8a7a72; --gold: #b8955a; }
         body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f0f0f0;
+            background-color: var(--cream);
         }
         img {
             max-width: 80%;
