@@ -53,7 +53,7 @@
     <p style="text-align:center; color: var(--muted); font-size: 0.92rem; line-height: 1.7; margin-top: 2rem; margin-bottom: 0.5rem;">
       Laat je ons weten of je komt?
     </p>
-    <p style="text-align:center; font-size: 0.78rem; color: #bba898; letter-spacing: 0.08em; margin-bottom: 1rem;">Vul in voor <strong>1 juli 2026</strong></p>
+    <p style="text-align:center; font-size: 0.78rem; color: #bba898; letter-spacing: 0.08em; margin-bottom: 1rem;">Graag voor <strong>1 juli 2026</strong> invullen</p>
     <form id="rsvp-form" novalidate>
       <div class="honeypot" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
       <h2 class="section-title">Jouw gegevens</h2>
@@ -61,11 +61,6 @@
         <label>Naam <span class="req">*</span></label>
         <input type="text" id="naam" name="naam" placeholder="Voor- en achternaam" required>
         <div class="error-msg" id="err-naam">Vul je naam in.</div>
-      </div>
-      <div class="field">
-        <label>E-mailadres <span class="req">*</span></label>
-        <input type="email" id="email" name="email" placeholder="jouw@email.nl" required>
-        <div class="error-msg" id="err-email">Vul een geldig e-mailadres in.</div>
       </div>
       <h2 class="section-title">Aanwezigheid</h2>
       <div class="field">
@@ -81,12 +76,17 @@
         <div class="field">
           <label>Gast 1 <span class="req">*</span></label>
           <input type="text" id="gast1" name="gast1" placeholder="Voor- en achternaam">
-          <p class="hint">Jouw naam is alvast ingevuld &mdash; pas aan indien nodig.</p>
+          <p class="hint">Jouw naam is alvast ingevuld.</p>
         </div>
         <div class="field">
           <label>Gast 2 <span style="color:var(--muted); font-size:0.7rem; text-transform:none; letter-spacing:0;">(optioneel)</span></label>
           <input type="text" id="gast2" name="gast2" placeholder="Naam tweede gast">
           <p class="hint">Laat leeg als je alleen komt.</p>
+        </div>
+        <div class="field">
+          <label>E-mailadres <span class="req">*</span></label>
+          <input type="email" id="email" name="email" placeholder="jouw@email.nl" required>
+          <div class="error-msg" id="err-email">Vul een geldig e-mailadres in.</div>
         </div>
         <h2 class="section-title">Dieetwensen &amp; allergieën</h2>
         <div class="field">
@@ -129,18 +129,22 @@ document.getElementById('rsvp-form').addEventListener('submit', async e => {
   const aanwezig = document.querySelector('input[name="aanwezig"]:checked');
   document.getElementById('err-naam').style.display = !naam.value.trim() ? 'block' : 'none';
   if (!naam.value.trim()) valid = false;
-  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
-  document.getElementById('err-email').style.display = !emailOk ? 'block' : 'none';
-  if (!emailOk) valid = false;
   document.getElementById('err-aanwezig').style.display = !aanwezig ? 'block' : 'none';
   if (!aanwezig) valid = false;
+  if (aanwezig && aanwezig.value === 'Ja') {
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
+    document.getElementById('err-email').style.display = !emailOk ? 'block' : 'none';
+    if (!emailOk) valid = false;
+  } else {
+    document.getElementById('err-email').style.display = 'none';
+  }
   if (!valid) return;
   const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/%%GOOGLE_FORM_URL_DAG%%/formResponse';
   const fd = new FormData();
   fd.append('entry.1498135098', naam.value);
   fd.append('entry.211442414', email.value);
   fd.append('entry.877086558', aanwezig.value);
-  fd.append('entry.2108448238', document.getElementById('gast1').value || '');
+  fd.append('entry.2108448238', document.getElementById('gast1').value || naam.value || '');
   fd.append('entry.452559423', document.getElementById('gast2').value || '');
   fd.append('entry.2606285', document.getElementById('allergieen').value || '');
   fd.append('entry.212410957', document.getElementById('bericht').value || '');

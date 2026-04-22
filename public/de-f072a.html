@@ -51,7 +51,7 @@
 <div class="form-wrap">
   <div id="form-area">
     <p style="text-align:center; color: var(--muted); font-size: 0.92rem; line-height: 1.7; margin-top: 2rem; margin-bottom: 0.5rem;">
-      Bitte teile uns mit,<br>ob du kommen wirst.
+      Seid ihr dabei?
     </p>
     <p style="text-align:center; font-size: 0.78rem; color: #bba898; letter-spacing: 0.08em; margin-bottom: 1rem;">Bitte antworte bis zum <strong>1. Juli 2026</strong></p>
     <form id="rsvp-form" novalidate>
@@ -61,11 +61,6 @@
         <label>Name <span class="req">*</span></label>
         <input type="text" id="naam" name="naam" placeholder="Vor- und Nachname" required>
         <div class="error-msg" id="err-naam">Bitte gib deinen Namen ein.</div>
-      </div>
-      <div class="field">
-        <label>E-Mail-Adresse <span class="req">*</span></label>
-        <input type="email" id="email" name="email" placeholder="deine@email.de" required>
-        <div class="error-msg" id="err-email">Bitte gib eine gültige E-Mail-Adresse ein.</div>
       </div>
       <h2 class="section-title">Zusage</h2>
       <div class="field">
@@ -81,12 +76,17 @@
         <div class="field">
           <label>Gast 1 <span class="req">*</span></label>
           <input type="text" id="gast1" name="gast1" placeholder="Vor- und Nachname">
-          <p class="hint">Dein Name wurde bereits eingetragen &mdash; bitte bei Bedarf anpassen.</p>
+          <p class="hint">Dein Name wurde bereits eingetragen.</p>
         </div>
         <div class="field">
           <label>Gast 2 <span style="color:var(--muted); font-size:0.7rem; text-transform:none; letter-spacing:0;">(optional)</span></label>
           <input type="text" id="gast2" name="gast2" placeholder="Name der zweiten Person">
           <p class="hint">Leer lassen, wenn du alleine kommst.</p>
+        </div>
+        <div class="field">
+          <label>E-Mail-Adresse <span class="req">*</span></label>
+          <input type="email" id="email" name="email" placeholder="deine@email.de" required>
+          <div class="error-msg" id="err-email">Bitte gib eine gültige E-Mail-Adresse ein.</div>
         </div>
         <h2 class="section-title">Ernährungswünsche &amp; Allergien</h2>
         <div class="field">
@@ -129,18 +129,22 @@ document.getElementById('rsvp-form').addEventListener('submit', async e => {
   const aanwezig = document.querySelector('input[name="aanwezig"]:checked');
   document.getElementById('err-naam').style.display = !naam.value.trim() ? 'block' : 'none';
   if (!naam.value.trim()) valid = false;
-  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
-  document.getElementById('err-email').style.display = !emailOk ? 'block' : 'none';
-  if (!emailOk) valid = false;
   document.getElementById('err-aanwezig').style.display = !aanwezig ? 'block' : 'none';
   if (!aanwezig) valid = false;
+  if (aanwezig && aanwezig.value === 'Ja') {
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
+    document.getElementById('err-email').style.display = !emailOk ? 'block' : 'none';
+    if (!emailOk) valid = false;
+  } else {
+    document.getElementById('err-email').style.display = 'none';
+  }
   if (!valid) return;
   const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/%%GOOGLE_FORM_URL_DAG%%/formResponse';
   const fd = new FormData();
   fd.append('entry.1498135098', naam.value);
   fd.append('entry.211442414', email.value);
   fd.append('entry.877086558', aanwezig.value);
-  fd.append('entry.2108448238', document.getElementById('gast1').value || '');
+  fd.append('entry.2108448238', document.getElementById('gast1').value || naam.value || '');
   fd.append('entry.452559423', document.getElementById('gast2').value || '');
   fd.append('entry.2606285', document.getElementById('allergieen').value || '');
   fd.append('entry.212410957', document.getElementById('bericht').value || '');
@@ -148,11 +152,11 @@ document.getElementById('rsvp-form').addEventListener('submit', async e => {
   const successDiv = document.getElementById('success');
   if (aanwezig.value === 'Ja') {
     successDiv.innerHTML = `<div class="big">Vielen Dank!</div>
-    <p>Wir haben deine Anmeldung erhalten und freuen uns riesig auf euch.</p>
+    <p>Wir haben die Antwort erhalten und freuen uns riesig auf euch.</p>
     <p style="margin-top:1.5rem; font-size:0.85rem;">-- F &amp; M</p>`;
   } else {
     successDiv.innerHTML = `<div class="big">Vielen Dank fur deine Rückmeldung!</div>
-    <p>Wir haben deine Antwort erhalten und verstehen es, wenn du nicht kommen kannst.</p>
+    <p>Wir haben die Antwort erhalten und verstehen es, wenn ihr nicht kommen könnt.</p>
     <p style="margin-top:1.5rem; font-size:0.85rem;">-- F &amp; M</p>`;
   }
   document.getElementById('form-area').style.display = 'none';

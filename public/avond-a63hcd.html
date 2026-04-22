@@ -54,10 +54,10 @@
 </div>
 <div class="form-wrap">
   <div id="form-area">
-    <div class="info-box">
-      Je bent uitgenodigd voor ons <strong>avondfeest</strong> op <strong>5 september 2026</strong>, dat start om 20:00 uur. We hopen je te zien op de dansvloer!
-    </div>
-    <p style="text-align:center; color: var(--muted); font-size: 0.78rem; letter-spacing: 0.08em; margin-bottom: 1rem;">Reageer voor <strong>1 april 2026</strong></p>
+    <p style="text-align:center; color: var(--muted); font-size: 0.92rem; line-height: 1.7; margin-top: 2rem; margin-bottom: 0.5rem;">
+      Laat je ons weten of je met ons komt dansen?
+    </p>
+    <p style="text-align:center; font-size: 0.78rem; color: #bba898; letter-spacing: 0.08em; margin-bottom: 1rem;">Graag voor <strong>1 juli 2026</strong> invullen</p>
     <form id="rsvp-form" novalidate>
       <div class="honeypot" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off"></div>
       <h2 class="section-title">Jouw gegevens</h2>
@@ -66,17 +66,12 @@
         <input type="text" id="naam" name="naam" placeholder="Voor- en achternaam" required>
         <div class="error-msg" id="err-naam">Vul je naam in.</div>
       </div>
-      <div class="field">
-        <label>E-mailadres <span class="req">*</span></label>
-        <input type="email" id="email" name="email" placeholder="jouw@email.nl" required>
-        <div class="error-msg" id="err-email">Vul een geldig e-mailadres in.</div>
-      </div>
       <h2 class="section-title">Aanwezigheid</h2>
       <div class="field">
         <label>Ben jij/zijn jullie aanwezig? <span class="req">*</span></label>
         <div class="radio-group">
-          <label class="radio-item"><input type="radio" name="aanwezig" value="Ja"> Ja, we zijn erbij!</label>
-          <label class="radio-item"><input type="radio" name="aanwezig" value="Nee"> Helaas kunnen we er niet bij zijn</label>
+          <label class="radio-item"><input type="radio" name="aanwezig" value="Ja"> Jazeker!</label>
+          <label class="radio-item"><input type="radio" name="aanwezig" value="Nee"> Helaas kan ik er niet bij zijn</label>
         </div>
         <div class="error-msg" id="err-aanwezig">Maak een keuze.</div>
       </div>
@@ -85,12 +80,17 @@
         <div class="field">
           <label>Gast 1 <span class="req">*</span></label>
           <input type="text" id="gast1" name="gast1" placeholder="Voor- en achternaam">
-          <p class="hint">Jouw naam is alvast ingevuld &mdash; pas aan indien nodig.</p>
+          <p class="hint">Jouw naam is alvast ingevuld.</p>
         </div>
         <div class="field">
           <label>Gast 2 <span style="color:var(--muted); font-size:0.7rem; text-transform:none; letter-spacing:0;">(optioneel)</span></label>
           <input type="text" id="gast2" name="gast2" placeholder="Naam tweede gast">
           <p class="hint">Laat leeg als je alleen komt.</p>
+        </div>
+        <div class="field">
+          <label>E-mailadres <span class="req">*</span></label>
+          <input type="email" id="email" name="email" placeholder="jouw@email.nl" required>
+          <div class="error-msg" id="err-email">Vul je e-mailadres in.</div>
         </div>
         <h2 class="section-title">Overig</h2>
         <div class="field">
@@ -128,24 +128,28 @@ document.getElementById('rsvp-form').addEventListener('submit', async e => {
   const aanwezig = document.querySelector('input[name="aanwezig"]:checked');
   document.getElementById('err-naam').style.display = !naam.value.trim() ? 'block' : 'none';
   if (!naam.value.trim()) valid = false;
-  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
-  document.getElementById('err-email').style.display = !emailOk ? 'block' : 'none';
-  if (!emailOk) valid = false;
   document.getElementById('err-aanwezig').style.display = !aanwezig ? 'block' : 'none';
   if (!aanwezig) valid = false;
+  if (aanwezig && aanwezig.value === 'Ja') {
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
+    document.getElementById('err-email').style.display = !emailOk ? 'block' : 'none';
+    if (!emailOk) valid = false;
+  } else {
+    document.getElementById('err-email').style.display = 'none';
+  }
   if (!valid) return;
   const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/%%GOOGLE_FORM_URL_AVOND%%/formResponse';
   const fd = new FormData();
   fd.append('entry.1498135098', naam.value);
   fd.append('entry.211442414', email.value);
   fd.append('entry.877086558', aanwezig.value);
-  fd.append('entry.369231336', document.getElementById('gast1').value || '');
+  fd.append('entry.369231336', document.getElementById('gast1').value || naam.value || '');
   fd.append('entry.771811483', document.getElementById('gast2').value || '');
   fd.append('entry.212410957', document.getElementById('bericht').value || '');
   try { await fetch(GOOGLE_FORM_URL, { method: 'POST', body: fd, mode: 'no-cors' }); } catch(_) {}
   const successDiv = document.getElementById('success');
   if (aanwezig.value === 'Ja') {
-    successDiv.innerHTML = `<div class="big">Tot die avond!</div>
+    successDiv.innerHTML = `<div class="big">Dankjewel!</div>
     <p>We hebben je aanmelding ontvangen.<br>We kijken ernaar uit om samen te feesten!</p>
     <p style="margin-top:1.5rem; font-size:0.85rem;">-- F &amp; M</p>`;
   } else {
