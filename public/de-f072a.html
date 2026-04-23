@@ -37,6 +37,8 @@
   .error-msg { color: #c0392b; font-size: 0.78rem; margin-top: 0.3rem; display: none; }
   .honeypot { display: none !important; }
   .hint { font-size: 0.78rem; color: var(--muted); margin-top: 0.35rem; font-style: italic; }
+  a { color: var(--rose-dark); text-decoration: none; }
+  a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -106,6 +108,12 @@
         <div class="field">
           <label>Möchtest du uns noch etwas mitteilen?</label>
           <textarea id="bericht" name="bericht" placeholder="Eine Frage, ein Wunsch oder etwas anderes..."></textarea>
+        </div>
+        <div class="field">
+          <label>Möchtest du den Zeremonienmeisterinnen noch etwas mitteilen?</label>
+          <p style="text-align:left; color: var(--muted); font-size: 0.92rem; line-height: 1.7;">
+            Schreib dann an <a href="mailto:frekemalte2026@gmail.com">frekemalte2026@gmail.com</a>
+          </p>
         </div>
       </div>
       <button type="submit" class="submit-btn">Antwort absenden</button>
