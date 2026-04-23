@@ -67,11 +67,20 @@
         <label>Bist du/seid ihr dabei? <span class="req">*</span></label>
         <div class="radio-group">
           <label class="radio-item"><input type="radio" name="aanwezig" value="Ja"> Ja, wir sind dabei!</label>
-          <label class="radio-item"><input type="radio" name="aanwezig" value="Nee"> Leider können wir nicht kommen</label>
+          <label class="radio-item"><input type="radio" name="aanwezig" value="Nee"> Leider können wir nicht kommen.</label>
         </div>
         <div class="error-msg" id="err-aanwezig">Bitte wähle eine Option.</div>
       </div>
       <div id="extra-velden" style="display:none;">
+        <h2 class="section-title">Brunch</h2>
+        <div class="field">
+          <label>Kommt ihr Sonntag zum Brunch? <span class="req">*</span></label>
+          <div class="radio-group">
+            <label class="radio-item"><input type="radio" name="brunch" value="Ja"> Ja. Kaffee!</label>
+            <label class="radio-item"><input type="radio" name="brunch" value="Nee"> Nein, wir müssen früh weg.</label>
+          </div>
+          <div class="error-msg" id="err-brunch">Bitte wähle eine Option.</div>
+        </div>
         <h2 class="section-title">Gäste</h2>
         <div class="field">
           <label>Gast 1 <span class="req">*</span></label>
@@ -131,10 +140,14 @@ document.getElementById('rsvp-form').addEventListener('submit', async e => {
   if (!naam.value.trim()) valid = false;
   document.getElementById('err-aanwezig').style.display = !aanwezig ? 'block' : 'none';
   if (!aanwezig) valid = false;
+  let brunch;
   if (aanwezig && aanwezig.value === 'Ja') {
     const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
     document.getElementById('err-email').style.display = !emailOk ? 'block' : 'none';
     if (!emailOk) valid = false;
+    brunch = document.querySelector('input[name="brunch"]:checked');
+    document.getElementById('err-brunch').style.display = !brunch ? 'block' : 'none';
+    if (!brunch) valid = false;
   } else {
     document.getElementById('err-email').style.display = 'none';
   }
@@ -144,6 +157,7 @@ document.getElementById('rsvp-form').addEventListener('submit', async e => {
   fd.append('entry.1498135098', naam.value);
   fd.append('entry.211442414', email.value);
   fd.append('entry.877086558', aanwezig.value);
+  fd.append('entry.1797637300', brunch ? brunch.value : '');
   fd.append('entry.2108448238', document.getElementById('gast1').value || naam.value || '');
   fd.append('entry.452559423', document.getElementById('gast2').value || '');
   fd.append('entry.2606285', document.getElementById('allergieen').value || '');
